@@ -34,6 +34,7 @@
  * 读取id为source的列表，获取其中城市名字及城市对应的空气质量
  * 返回一个数组，格式见函数中示例
  */
+console.log()
 function getData() {
   /*
   coding here
@@ -46,7 +47,18 @@ function getData() {
     ……
   ]
   */
-
+  var sources = document.querySelectorAll('#source li');
+  var sourcesB = document.querySelectorAll('#source li b');
+  var data = [];
+  
+  for(let item=0;item<sources.length;item++){
+    var one = [];
+    var city = sources[item].innerHTML.substr(0,2)
+    var weather = sourcesB[item].innerHTML
+    one.push(city)
+    one.push(weather)
+    data.push(one)
+  }
   return data;
 
 }
@@ -57,7 +69,9 @@ function getData() {
  * 返回一个排序后的数组
  */
 function sortAqiData(data) {
-
+  return data.sort(function(l1,l2){
+      return l1[1]-l2[1];
+  });
 }
 
 /**
@@ -66,7 +80,11 @@ function sortAqiData(data) {
  * 格式见ul中的注释的部分
  */
 function render(data) {
-
+    var j = 1;
+  for(let i=0;i<data.length;i++){
+    document.querySelector("#resort").innerHTML += '<li>第'+j+'名：'+data[i][0]+'空气质量：<b>'+data[i][1]+'</b></li>'
+    j += 1
+  }
 }
 
 function btnHandle() {
@@ -76,9 +94,10 @@ function btnHandle() {
 }
 
 function init() {
-
   // 在这下面给sort-btn绑定一个点击事件，点击时触发btnHandle函数
-
+  document.querySelector('#sort-btn').onclick = function(){
+    btnHandle()
+  }
 }
 
 init();
